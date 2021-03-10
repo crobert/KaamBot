@@ -1,0 +1,27 @@
+{
+  "name": "kaambot",
+  "version": "1.0.0",
+  "description": "Discord Bot pour lire des citations Kaamelott",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crobert/kaambot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "kaamelott"
+  ],
+  "author": "crobert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crobert/kaambot/issues"
+  },
+  "homepage": "https://github.com/crobert/kaambot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
