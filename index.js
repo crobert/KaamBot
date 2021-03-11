@@ -1,28 +1,32 @@
-//https://discord.com/api/oauth2/authorize?client_id=819097609750446091&permissions=36768832&scope=bot
-//!kaamBot play kadoc
 const Discord = require("discord.js");
 const config = require("./config.json");
 
 const client = new Discord.Client();
-const prefix = "!kaamBot ";
+const prefix = "!kaambot ";
 const listQuotes = require("./sounds.json");
+
+String.prototype.cleanDiacritics = function () {
+  return this.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
 
 function search(str) {
   const searchRegExp = new RegExp(str, "gi");
   return listQuotes.filter((quote) => {
     return (
-      searchRegExp.test(quote.title) ||
-      searchRegExp.test(quote.character) ||
-      searchRegExp.test(quote.episode)
+      searchRegExp.test(quote.title.cleanDiacritics()) ||
+      searchRegExp.test(quote.character.cleanDiacritics()) ||
+      searchRegExp.test(quote.episode.cleanDiacritics())
     );
   });
 }
 
 function playSound(message, quote) {
   if (!message.member.voice.channel)
-    return message.reply("You must be in a voice channel.");
+    return message.reply("Vous devez être dans un salon audio");
   if (message.guild.me.voice.channel)
-    return message.reply("I'm already playing.");
+    return message.reply(
+      "Je suis déjà en train de parler, laissez moi terminer"
+    );
 
   message.member.voice.channel
     .join()
@@ -37,27 +41,29 @@ function playSound(message, quote) {
 
 client.on("message", function (message) {
   if (message.author.bot) return;
-  if (!message.content.startsWith(prefix)) return;
-  const commandBody = message.content.slice(prefix.length);
+  const messageContent = message.content.toLowerCase().cleanDiacritics();
+  if (!messageContent.startsWith(prefix)) return;
+  const commandBody = messageContent.slice(prefix.length);
   const args = commandBody.split(" ");
   const command = args.shift().toLowerCase();
   const text = args.join(" ");
   if (command === "play") {
-    //Search for a file
-    //if found
-    //if not found
     let result = search(text);
     if (result.length > 10) {
       result = result.slice(0, 10);
     }
-    if (result.length === 0) message.channel.send("No result");
+    if (result.length === 0)
+      message.channel.send(
+        "Aucun resultat, si vous pensez qu'il manque une citation n'hésitez pas à contribuer : https://github.com/crobert/kaambot"
+      );
     if (result.length === 1) playSound(message, result[0]);
     if (result.length > 1) {
       let filter = (m) => m.author.id === message.author.id;
       let i = 0;
-      let resultText = "";
+      let resultText =
+        "Voici les propositions, répondre par le numéro de la citation souhaitée";
       const txtmap = result.map((quote) => {
-        const txt = i + "-" + quote.title + ";\n";
+        const txt = i + " - " + quote.title + ";\n";
         resultText += txt;
         i++;
         return txt;
@@ -79,20 +85,18 @@ client.on("message", function (message) {
               }
             }
           })
-          .catch((collected) => {
+          .catch(() => {
             message.channel.send("Timeout");
           });
       });
     }
-
-    //playSound(message, "a_kadoc");
-  } else if (command === "random") {
+  } else if (command === "random" || command === "rand") {
     playSound(
       message,
       listQuotes[Math.floor(Math.random() * listQuotes.length)]
     );
   } else {
-    message.reply("Unknow command");
+    message.channel.send("Commande inconnue");
   }
 });
 
