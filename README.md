@@ -21,7 +21,7 @@ Ce projet contient le code du bot, pour le mettre en place dans un salon il est 
   \
   Une fois ces étapes réalisés le statut du bot doit passer en `connecté`.
 
-#Fonctionnement
+# Fonctionnement
 Il est nécesssaire d'avoir accès à un salon textuel pour écrire les commandes et être connecté à un salon audio pour que le son puisse être lu. \
 Les commandes doivents être précédés par `!kaamBot ` \
 Liste des commandes :
