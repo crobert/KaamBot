@@ -61,7 +61,7 @@ client.on("message", function (message) {
       let filter = (m) => m.author.id === message.author.id;
       let i = 0;
       let resultText =
-        "Voici les propositions, répondre par le numéro de la citation souhaitée";
+        "Voici les propositions, répondre par le numéro de la citation souhaitée\n";
       const txtmap = result.map((quote) => {
         const txt = i + " - " + quote.title + ";\n";
         resultText += txt;
