@@ -26,12 +26,13 @@ Il est nécesssaire d'avoir accès à un salon textuel pour écrire les commande
 Les commandes doivents être précédés par `!kaamBot ` \
 Liste des commandes :
 
-- `random` : lance une citation aléatoire
+- `random <nom personnage>` : lance une citation aléatoire, si un nom de personnage est spécifié restreint l'aléatoire aux citations dont il en est l'autheur. 
 - `play <texte à chercher>` : recherche le texte dans le nom de l'épisode, le nom du personnage et le texte de la citation. Si une seule citation est trouvée la joue directement. Sinon propose une liste jusqu'à 10 citations correspondant à la recherche. Il suffit ensuite de répondre en indiquant le numéro de la citation souhaitée.
 
 Exemples de commande :
 
 - `!kaamBot random`
+- `!kaamBot random arthur`
 - `!kaamBot play kadoc`
 - `!kaamBot play elle fait du flan`
 - `!kaamBot play Livre II,`

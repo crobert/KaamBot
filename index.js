@@ -14,8 +14,17 @@ function search(str) {
 	return listQuotes.filter((quote) => {
 		return (
 			searchRegExp.test(quote.title.cleanDiacritics()) ||
-      searchRegExp.test(quote.character.cleanDiacritics()) ||
-      searchRegExp.test(quote.episode.cleanDiacritics())
+            searchRegExp.test(quote.character.cleanDiacritics()) ||
+            searchRegExp.test(quote.episode.cleanDiacritics())
+		);
+	});
+}
+
+function searchChar(str) {
+	const searchRegExp = new RegExp(str, 'gi');
+	return listQuotes.filter((quote) => {
+		return (
+			searchRegExp.test(quote.character.cleanDiacritics())
 		);
 	});
 }
@@ -94,10 +103,25 @@ client.on('message', function(message) {
 		}
 	}
 	else if (command === 'random' || command === 'rand') {
-		playSound(
-			message,
-			listQuotes[Math.floor(Math.random() * listQuotes.length)],
-		);
+		const result = searchChar(text);
+		if(text) {
+			if (result.length === 0) {
+				message.channel.send(
+					'Aucun resultat, si vous pensez qu\'il manque une citation n\'hésitez pas à contribuer : https://github.com/crobert/kaambot',
+				);
+			}
+			else{
+				playSound(
+					message, result[Math.floor(Math.random() * result.length)],
+				);
+			}
+		}
+		else{
+			playSound(
+				message,
+				listQuotes[Math.floor(Math.random() * listQuotes.length)],
+			);
+		}
 	}
 	else {
 		message.channel.send('Commande inconnue');
