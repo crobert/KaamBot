@@ -5,6 +5,19 @@ const client = new Discord.Client();
 const prefix = '!kaambot ';
 const listQuotes = require('./sounds.json');
 
+const HelpMessage = 'Il est nécesssaire d\'avoir accès à un salon textuel pour écrire les commandes et être connecté à un salon audio pour que le son puisse être lu.\n' +
+'Les commandes doivents être précédés par !kaamBot\n' +
+'\n' +
+'Liste des commandes :\n' +
+'random : lance une citation aléatoire\n' +
+'play <texte à chercher> : recherche le texte dans le nom de l\'épisode, le nom du personnage et le texte de la citation. Si une seule citation est trouvée la joue directement. Sinon propose une liste jusqu\'à 10 citations correspondant à la recherche. Il suffit ensuite de répondre en indiquant le numéro de la citation souhaitée.\n' +
+'\n' +
+'Exemples de commande :\n' +
+'!kaamBot random\n' +
+'!kaamBot play kadoc\n' +
+'!kaamBot play elle fait du flan\n' +
+'!kaamBot play Livre II,';
+
 String.prototype.cleanDiacritics = function() {
 	return this.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
@@ -91,9 +104,17 @@ client.on('message', function(message) {
 					.then((responseMessage) => {
 						const answer = parseInt(responseMessage.first());
 						if (isNaN(answer)) {
+							message.channel.send(
+								'Le numéro saisie n\'est pas correct.',
+							);
 						}
 						else if (result[answer]) {
 							playSound(message, result[answer]);
+						}
+						else{
+							message.channel.send(
+								'Le numéro saisie n\'est pas correct.',
+							);
 						}
 					})
 					.catch(() => {
@@ -123,8 +144,12 @@ client.on('message', function(message) {
 			);
 		}
 	}
+	else if(command === 'help') {
+		message.channel.send(HelpMessage);
+	}
 	else {
 		message.channel.send('Commande inconnue');
+		message.channel.send(HelpMessage);
 	}
 });
 
