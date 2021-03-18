@@ -35,5 +35,5 @@ Exemples de commande :
 - `!kaamBot random`
 - `!kaamBot random arthur`
 - `!kaamBot play kadoc`
-- `!kaamBot play elle fait du flan`
+- `!kaamBot play elle fait des flans`
 - `!kaamBot play Livre II,`

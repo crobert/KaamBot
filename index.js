@@ -15,7 +15,7 @@ const HelpMessage = 'Il est nécesssaire d\'avoir accès à un salon textuel pou
 'Exemples de commande :\n' +
 '!kaamBot random\n' +
 '!kaamBot play kadoc\n' +
-'!kaamBot play elle fait du flan\n' +
+'!kaamBot play elle fait des flans\n' +
 '!kaamBot play Livre II,';
 
 String.prototype.cleanDiacritics = function() {
